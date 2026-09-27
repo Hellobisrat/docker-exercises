@@ -7,29 +7,29 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
 @Configuration
 public class DatabaseConfig {
 
-    private String user = System.getenv("DB_USER");
-    private String password = System.getenv("DB_PWD");
-    private String serverName = System.getenv("DB_SERVER"); // db host name, like localhost without the port
-    private String dbName = System.getenv("DB_NAME");
-    private MysqlDataSource datasource = new MysqlDataSource();
-
-    public DatabaseConfig() {
-        datasource.setPassword(password);
-        datasource.setUser(user);
-        datasource.setServerName(serverName);
-        datasource.setDatabaseName(dbName);
-        datasource.setPort(3306); // default config
-        datasource.setURL("jdbc:mysql://" + serverName + ":3306/" + dbName);
-
-
-    }
-
     @Bean
     public Connection getConnection() throws SQLException {
+
+        String user = System.getenv("DB_USER");
+        String password = System.getenv("DB_PASSWORD");
+        String host = System.getenv("DB_HOST");
+        String port = System.getenv("DB_PORT");
+        String dbName = System.getenv("DB_NAME");
+
+        if (user == null || password == null || host == null || port == null || dbName == null) {
+            throw new RuntimeException("Missing environment variables for DB connection");
+        }
+
+        String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+
+        MysqlDataSource datasource = new MysqlDataSource();
+        datasource.setUser(user);
+        datasource.setPassword(password);
+        datasource.setUrl(url);
+
         return datasource.getConnection();
     }
 }
