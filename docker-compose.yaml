@@ -28,18 +28,19 @@ services:
       - "8082:80"
 
   app:
-    build: .
-    container_name: my-app
-    depends_on:
-      - mysql
-    environment:
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_NAME: mydb
-      DB_USER: myuser
-      DB_PASSWORD: mypass
-    ports:
-      - "8080:8080"
+  image: 167.99.238.79:8083/docker-exercises-app
+  container_name: my-app
+  depends_on:
+    - mysql
+  environment:
+    DB_HOST: mysql
+    DB_PORT: 3306
+    DB_NAME: mydb
+    DB_USER: myuser
+    DB_PASSWORD: mypass
+  ports:
+    - "8080:8080"
+
 
 volumes:
   mysql_data:

@@ -30,3 +30,17 @@ cd /root/docker-exercises
 docker compose up -d --build
 
 
+# tag image for nexus
+docker tag docker-exercises-app 167.99.238.79:8083/docker-exercises-app
+
+
+# after tag log in nexus docker
+docker login 167.99.238.79:8083
+
+# push
+docker push 167.99.238.79:8083/docker-exercises-app
+# pull
+docker pull 167.99.238.79:8083/docker-exercises-app
+
+
+
