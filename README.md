@@ -20,3 +20,13 @@ docker run --name my-phpmyadmin \
   -e PMA_PORT=3306 \
   -d phpmyadmin/phpmyadmin
 
+
+  # copy the images / project to server
+  scp -i ~/.ssh/id_rsa -r docker-exercises root@157.245.140.57:/root/
+
+# build inside the server
+cd /root/docker-exercises
+./gradlew build
+docker compose up -d --build
+
+
